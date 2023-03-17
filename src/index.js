@@ -1,10 +1,11 @@
 //import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
-import PokemonList from './PokemonList';
+import PokemonList from './layouts/PokemonList';
 import axios from 'axios';
-import Pagination from './Pagination';
-import DetailPane from './DetailPane';
+import Pagination from './components/Pagination';
+import DetailPane from './layouts/DetailPane';
+import Header from './layouts/Header';
 
 
 const App = () => {
@@ -22,7 +23,7 @@ const App = () => {
     useEffect(() => {
         setLoading(true);
         let cancel;
-        axios.get(currentPageUrl, {
+        axios.get(currentPageUrl+"?limit=5", {
             cancelToken: new axios.CancelToken(c => cancel = c)
         }).then(res => {
             setLoading(false);
@@ -66,6 +67,7 @@ const App = () => {
 
     return (
         <>
+            <Header/>
             <PokemonList 
                 pokemon={pokemon}
                 openPokemonDetails={openPokemonDetails}
