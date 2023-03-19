@@ -79,7 +79,7 @@ class MainBodyContainer extends React.Component {
         return <>
             <div style={MainBodyContainer.styles}>
                 <div style={{width:"74%"}}>
-                    <DetailPane currentPokemonImageUrl={this.state.selectedPokemonURL}/>
+                    <DetailPane currentPokemonUrl={this.state.selectedPokemonURL}/>
                 </div>
                 <div style={{width:"20%"}}>
                     <RightNavigationPane 
