@@ -8,7 +8,11 @@ class DetailPane extends React.Component {
         super(props);
         this.state = {
             pokemonURL: "https://pokeapi.co/api/v2/pokemon/1/",
-            pokemonImageURL: ""
+            pokemonImageURL: "",
+            shinyPokemonImageURL: "",
+            pokemonName: "",
+            pokemonTypes: [],
+            isShiny: false
         }
     }
 
@@ -17,7 +21,10 @@ class DetailPane extends React.Component {
         axios.get(this.state.pokemonURL).then(response => {
             //console.log(response.data);
             this.setState({
-                pokemonImageURL: response.data.sprites.other.dream_world.front_default
+                pokemonImageURL: response.data.sprites.other['official-artwork'].front_default,
+                shinyPokemonImageURL: response.data.sprites.other['official-artwork'].front_shiny,
+                pokemonName: response.data.species.name,
+                pokemonTypes: response.data.types
             });
         });
     }
@@ -28,15 +35,44 @@ class DetailPane extends React.Component {
             axios.get(this.props.currentPokemonUrl || this.state.pokemonURL).then(response => {
                 //console.log(response.data);
                 this.setState({
-                    pokemonImageURL: response.data.sprites.other.dream_world.front_default
+                    pokemonImageURL: response.data.sprites.other['official-artwork'].front_default,
+                    shinyPokemonImageURL: response.data.sprites.other['official-artwork'].front_shiny,
+                    pokemonName: response.data.species.name,
+                    pokemonTypes: response.data.types
                 });
             });
         }
     }
 
+
+    static typeStyle = {
+                    display:"flex", 
+                    alignItems:"center", 
+                    justifyContent:"center", 
+                    height:"30px", 
+                    width:"100px", 
+                    borderRadius:"3px",
+                    border: "1px solid black",
+                    fontWeight: "bold",
+                    marginRight:"10px"
+    };
+
+
     render(){
         return <>
-            <img src={this.state.pokemonImageURL} height="250px"/>
+            <img src={this.state.isShiny ? this.state.shinyPokemonImageURL : this.state.pokemonImageURL} height="250px"/>
+            <p>{this.state.pokemonName.toUpperCase()}
+                <button onClick={()=>{this.setState({isShiny: !this.state.isShiny})}}>
+                    {this.state.isShiny ? "Shiny": "Normal"}
+                </button>
+            </p>
+            <div style={{display:"flex", flexDirection:"row", flexWrap: "wrap"}}>
+                {this.state.pokemonTypes.map(type=>{
+                    return <div style={DetailPane.typeStyle}>
+                        {type.type.name.toUpperCase()}
+                    </div>
+                })}
+            </div>
         </>;
     }
 }
