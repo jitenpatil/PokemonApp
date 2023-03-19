@@ -1,13 +1,38 @@
 import React, { useEffect, useState } from 'react';
 
-export default function DetailPane({currentPokemonImageUrl}) {
+// CLASS COMPONENT
 
-    return (
-        <>
-            <div>
-                <img src={currentPokemonImageUrl}/>
-                
-            </div>
-        </>
-    );
+class DetailPane extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            
+        }
+    }
+
+    componentDidMount(){
+
+    }
+
+    render(){
+        return <>
+            <img src={this.props.currentPokemonImageUrl}/>
+        </>;
+    }
 }
+
+export default DetailPane;
+
+
+// FUNCTION COMPONENT
+
+// export default function DetailPane({currentPokemonImageUrl}) {
+
+//     return (
+//         <>
+//             <div>
+//                 <img src={currentPokemonImageUrl}/>
+//             </div>
+//         </>
+//     );
+// }
