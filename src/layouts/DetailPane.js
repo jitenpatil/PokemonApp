@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { typeTheme } from '../theme/type';
 
 // CLASS COMPONENT
 
@@ -33,7 +34,7 @@ class DetailPane extends React.Component {
         console.log("Detail Pane - Component Did Update");
         if(prevProps.currentPokemonUrl !== this.props.currentPokemonUrl){
             axios.get(this.props.currentPokemonUrl || this.state.pokemonURL).then(response => {
-                //console.log(response.data);
+                console.log("POKEMON",response.data);
                 this.setState({
                     pokemonImageURL: response.data.sprites.other['official-artwork'].front_default,
                     shinyPokemonImageURL: response.data.sprites.other['official-artwork'].front_shiny,
@@ -52,9 +53,9 @@ class DetailPane extends React.Component {
                     height:"30px", 
                     width:"100px", 
                     borderRadius:"3px",
-                    border: "1px solid black",
                     fontWeight: "bold",
-                    marginRight:"10px"
+                    marginRight:"10px",
+                    fontFamily:"Calibri"
     };
 
 
@@ -68,7 +69,7 @@ class DetailPane extends React.Component {
             </p>
             <div style={{display:"flex", flexDirection:"row", flexWrap: "wrap"}}>
                 {this.state.pokemonTypes.map(type=>{
-                    return <div style={DetailPane.typeStyle}>
+                    return <div style={{...DetailPane.typeStyle, ...typeTheme[type.type.name.toUpperCase()]}}>
                         {type.type.name.toUpperCase()}
                     </div>
                 })}
