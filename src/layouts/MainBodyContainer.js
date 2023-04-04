@@ -2,6 +2,8 @@ import React from 'react'
 import DetailPane from './DetailPane';
 import RightNavigationPane from './RightNavigationPane';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import { ThemeContext } from '../context/ThemeContext';
 
 // CLASS COMPONENT
 
@@ -17,6 +19,7 @@ class MainBodyContainer extends React.Component {
         this.gotoNextPage = this.gotoNextPage.bind(this);
         this.gotoPrevPage = this.gotoPrevPage.bind(this);
         this.openPokemonDetails = this.openPokemonDetails.bind(this);
+        this.pdfDownload = this.pdfDownload.bind(this);
 
     }
 
@@ -71,16 +74,24 @@ class MainBodyContainer extends React.Component {
     static styles = {
         width: "100%",
         border: "solid 2px green",
-
         display: "flex"
     };
 
+    static contextType = ThemeContext;
+
+    pdfDownload(){
+        const doc = new jsPDF();
+        doc.text(10, 10, "Jiten");
+        doc.save("label.pdf");
+    }
+
     render(){
         return <>
-            <div style={MainBodyContainer.styles}>
+            <div style={{...MainBodyContainer.styles, backgroundColor: this.context.isDarkMode ? "black":"white"}}>
                 <div style={{width:"74%"}}>
                     <DetailPane currentPokemonUrl={this.state.selectedPokemonURL}/>
                 </div>
+                {/* <button onClick={pdfDownload}>Click</button> */}
                 <div style={{width:"20%"}}>
                     <RightNavigationPane 
                         pokemonList = {this.state.pokemonList}
