@@ -10,10 +10,6 @@ class Header extends React.Component {
 
     static contextType = ThemeContext;
 
-    jeet(){
-        console.log("Jiten sikhraha hai");
-    }
-
     render(){
         return (
             <>
