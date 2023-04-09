@@ -1,83 +1,36 @@
 //import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
-import React, { useState, useEffect } from 'react';
-import PokemonList from './PokemonList';
-import axios from 'axios';
-import Pagination from './Pagination';
-import DetailPane from './DetailPane';
+import React from 'react';
+import { ThemeContext } from './context/ThemeContext';
+import PokeDex from './pages/PokeDex';
 
 
-const App = () => {
-    const [pokemon, setPokemon] = useState([]);
-    const [currentPageUrl, setCurrentPageUrl] = useState('https://pokeapi.co/api/v2/pokemon');
-    const [nextPageUrl, setNextPageUrl] = useState();
-    const [prevPageUrl, setPrevPageUrl] = useState();
-    const [loading, setLoading] = useState(true);
+class App extends React.Component {
 
-
-    const [selectedPokemonUrl, setSelectedPokemonUrl] = useState();
-    const [currentPokemonImageUrl, setCurrentPokemonImageUrl] = useState();
-    
-    //API call to fetch Pokemon List
-    useEffect(() => {
-        setLoading(true);
-        let cancel;
-        axios.get(currentPageUrl, {
-            cancelToken: new axios.CancelToken(c => cancel = c)
-        }).then(res => {
-            setLoading(false);
-            setPokemon(res.data.results.map(p => ({name: p.name, url: p.url})))
-            setNextPageUrl(res.data.next);
-            setPrevPageUrl(res.data.previous);
-        });
-
-        return () => cancel();
-    }, [currentPageUrl]);
-      
-
-    
-
-    //API call to fetch Individual Pokemon Information
-    useEffect(() => {
-        
-        let cancel;
-        axios.get(selectedPokemonUrl, {
-            cancelToken: new axios.CancelToken(c => cancel = c)
-        }).then(res => { 
-            setCurrentPokemonImageUrl(res.data.sprites.front_default);
-        });
-
-        return () => cancel();
-    }, [selectedPokemonUrl]);
-
-    function openPokemonDetails(url) {
-        setSelectedPokemonUrl(url);
-    }
-    
-    function gotoNextPage() {
-        setCurrentPageUrl(nextPageUrl);
+    constructor(props){
+        super(props);
+        this.state = {
+            isDarkMode: false
+        };
+        this.toggleTheme = this.toggleTheme.bind(this);
     }
 
-    function gotoPrevPage() {
-        setCurrentPageUrl(prevPageUrl);
+    toggleTheme(){
+        this.setState({isDarkMode:!this.state.isDarkMode});
     }
 
-    if (loading) return "Loading...";
-
-    return (
-        <>
-            <PokemonList 
-                pokemon={pokemon}
-                openPokemonDetails={openPokemonDetails}
-            />
-            <Pagination 
-                gotoNextPage={gotoNextPage}
-                gotoPrevPage={gotoPrevPage}
-            />
-            <DetailPane currentPokemonImageUrl = {currentPokemonImageUrl}/>
-        </>
-        
-    );
+    render(){
+        return (
+            <>
+                <div style={{backgroundColor:this.state.isDarkMode? "#252625":"white", height:"100vh"}}>
+                    <ThemeContext.Provider value={{isDarkMode:this.state.isDarkMode, toggleTheme: this.toggleTheme}}>
+                        <PokeDex/>
+                    </ThemeContext.Provider>
+                </div>
+            </>
+            
+        );
+    }
 }
 
 
