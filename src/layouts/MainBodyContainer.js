@@ -73,7 +73,6 @@ class MainBodyContainer extends React.Component {
 
     static styles = {
         width: "100%",
-        border: "solid 2px green",
         display: "flex"
     };
 
@@ -87,12 +86,12 @@ class MainBodyContainer extends React.Component {
 
     render(){
         return <>
-            <div style={{...MainBodyContainer.styles, backgroundColor: this.context.isDarkMode ? "black":"white"}}>
-                <div style={{width:"74%"}}>
+            <div style={{...MainBodyContainer.styles, backgroundColor: this.context.isDarkMode ? "#252625":"white"}}>
+                <div style={{width:"70%"}}>
                     <DetailPane currentPokemonUrl={this.state.selectedPokemonURL}/>
                 </div>
                 {/* <button onClick={pdfDownload}>Click</button> */}
-                <div style={{width:"20%"}}>
+                <div style={{width:"30%"}}>
                     <RightNavigationPane 
                         pokemonList = {this.state.pokemonList}
                         gotoPrevPage = {this.gotoPrevPage}

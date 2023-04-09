@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { typeTheme } from '../theme/type';
 import jsPDF from 'jspdf';
 import bulbasaur from '../images/1.png';
-import charmender from '../images/4.png';
-import squirtle from '../images/7.png';
+
 
 // CLASS COMPONENT
 

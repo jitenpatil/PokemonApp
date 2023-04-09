@@ -1,18 +1,25 @@
-import { useContext } from 'react'; 
 import React from 'react';
 import pokemonLogo from '../images/PokemonLogo.png';
 import { ThemeContext } from '../context/ThemeContext';
 
-export default function Header() {
+class Header extends React.Component {
     
-    const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+    constructor(props){
+        super(props);
+    }
 
-    return (
-        <>
-            <div style={{textAlign:"start", margin:"15px", backgroundColor: isDarkMode? "black":"white"}}>
-                <img src={pokemonLogo} alt="A" height="80px"/>
-                <button onClick={toggleTheme}>{isDarkMode? "Dark" : "Light"}</button>
-            </div>
-        </>
-    );
-}
+    static contextType = ThemeContext;
+
+    render(){
+        return (
+            <>
+                <div style={{textAlign:"start", padding:"15px", backgroundColor: this.context.isDarkMode? "#252625":"white", opacity: 0.9}}>
+                    <img src={pokemonLogo} alt="A" height="80px"/>
+                    <button onClick={this.context.toggleTheme}>{this.context.isDarkMode? "Dark" : "Light"}</button>
+                </div>
+            </>
+            );
+        }
+    }
+
+export default Header;

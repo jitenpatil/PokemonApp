@@ -1,9 +1,8 @@
 //import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import React from 'react';
-import Header from './layouts/Header';
-import MainBodyContainer from './layouts/MainBodyContainer';
 import { ThemeContext } from './context/ThemeContext';
+import PokeDex from './pages/PokeDex';
 
 
 class App extends React.Component {
@@ -23,10 +22,11 @@ class App extends React.Component {
     render(){
         return (
             <>
-                <ThemeContext.Provider value={{isDarkMode:this.state.isDarkMode, toggleTheme: this.toggleTheme}}>
-                    <Header/>
-                    <MainBodyContainer/>
-                </ThemeContext.Provider>
+                <div style={{backgroundColor:this.state.isDarkMode? "#252625":"white", height:"100vh"}}>
+                    <ThemeContext.Provider value={{isDarkMode:this.state.isDarkMode, toggleTheme: this.toggleTheme}}>
+                        <PokeDex/>
+                    </ThemeContext.Provider>
+                </div>
             </>
             
         );
