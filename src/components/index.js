@@ -1,3 +1,3 @@
-import CustomCheckbox from './CustomCheckbox';
+import CustomComponent from './CustomComponent';
 
-export default CustomCheckbox;
+export default CustomComponent;
